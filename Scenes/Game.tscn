@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://Scenes/Game.gd" type="Script" id=1]
-
-[node name="Game" type="Node"]
-script = ExtResource( 1 )
-player_path = "res://Scenes/Player/Player.tscn"
-area_1_path = "res://Scenes/Levels/Level00.tscn"

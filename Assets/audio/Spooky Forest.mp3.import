@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Spooky Forest.mp3-1eb5d36932ee796cb859fd64dacf56ad.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Spooky Forest.mp3"
+dest_files=[ "res://.import/Spooky Forest.mp3-1eb5d36932ee796cb859fd64dacf56ad.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

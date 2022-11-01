@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/themes/user_interface.tres" type="Theme" id=1]
+[ext_resource path="res://src/UI/BonfireMenu.gd" type="Script" id=2]
+
+
+[node name="BonfireMenu" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 64.0
+margin_top = 65.0
+margin_right = -768.0
+margin_bottom = -408.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameSaved" type="Label" parent="Control"]
+visible = false
+margin_left = 472.0
+margin_top = 240.0
+margin_right = 551.0
+margin_bottom = 254.0
+text = "Game Saved"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+anchor_right = 0.031
+anchor_bottom = 0.04
+margin_left = 64.0
+margin_top = 65.0
+margin_right = 224.256
+margin_bottom = 168.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="Control/VBoxContainer"]
+margin_right = 192.0
+margin_bottom = 20.0
+text = "Save"
+flat = true
+
+[node name="Travel" type="Button" parent="Control/VBoxContainer"]
+margin_top = 24.0
+margin_right = 192.0
+margin_bottom = 44.0
+text = "Travel"
+flat = true
+
+[node name="LeaveBonfire" type="Button" parent="Control/VBoxContainer"]
+margin_top = 48.0
+margin_right = 192.0
+margin_bottom = 68.0
+text = "Leave Bonfire"
+flat = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="pressed" from="Control/VBoxContainer/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Travel" to="." method="_on_Travel_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/LeaveBonfire" to="." method="_on_LeaveBonfire_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
