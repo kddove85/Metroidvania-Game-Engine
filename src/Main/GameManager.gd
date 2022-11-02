@@ -11,8 +11,8 @@ const AREA_E = "AreaE"
 
 var music = load("res://src/Main/Music.tscn").instance()
 
-var music_area_a = preload("res://assets/audio/Spooky Forest.mp3")
 var music_menu = preload("res://assets/audio/mysterious-anomaly.mp3")
+var music_boss = preload("res://assets/audio/CleytonRX - Battle RPG Theme.mp3")
 
 var player_parameters = null
 var area_parameters = {
@@ -59,7 +59,10 @@ func create_new_game():
 	get_node("MainMenu").queue_free()
 
 func get_area(area):
-	return load("res://src/Areas/%s.tscn" % area).instance()
+	var area_to_load = load("res://src/Areas/%s.tscn" % area).instance()
+	music.load_music(area_to_load.music)
+	music.restart()
+	return area_to_load
 
 func add_area(area, dict):
 	area.connect("update_level_parameters", self, "on_update_level_parameters")
@@ -67,6 +70,8 @@ func add_area(area, dict):
 	area.connect("area_entered", self, "on_area_entered")
 	area.connect("bonfire_activated", self, "on_bonfire_activated")
 	area.connect("open_bonfire_menu", self, "on_open_bonfire_menu")
+	area.connect("play_boss_music", self, "on_play_boss_music")
+	area.connect("boss_defeated", self, "on_boss_defeated")
 	for connection in area.get_node("Connectors").get_children():
 		connection.connect("change_area", self, "on_change_area")
 	for npc in area.get_node("NPCs").get_children():
@@ -77,11 +82,8 @@ func add_area(area, dict):
 	area.spawn_player(player_parameters)
 	area.move_player(dict)
 	area.get_node("Player").connect("game_over", self, "on_game_over")
-	music.load_music(music_area_a)
-	music.restart()
 	
 func on_game_over():
-	print("Game Manager says Game Over")
 	var game_over_screen = load("res://Scenes/UI/GameOverScreen.tscn").instance()
 	add_child(game_over_screen)
 	game_over_screen.connect("reset", self, "on_reset")
@@ -135,8 +137,16 @@ func on_bonfire_travel(destination):
 				var area = get_area(new_area)
 				add_area(area, {"type": "bonfire", "bonfire": current_bonfire})
 				
+func on_play_boss_music():
+	music.load_music(music_boss)
+	music.volume_db = 0
+	music.play()
+	
+func on_boss_defeated():
+	music.load_music(get_node(current_area).music)
+	music.restart()
+				
 func on_change_area(new_area, new_node):
-	print("here")
 	var current_area_node = get_node(current_area)
 	current_area_node.queue_free()
 	current_area_node.get_tree().paused = false
@@ -161,10 +171,8 @@ func save_game():
 	config.set_value(AREA_D, "area_parameters", area_parameters[AREA_D])
 	config.set_value(AREA_E, "area_parameters", area_parameters[AREA_E])
 	config.save(SAVE_PATH)
-	print("game saved")
 	
 func on_load_game():
-	print("load_game")
 	get_node("MainMenu").queue_free()
 	var config = ConfigFile.new()
 	config.load(SAVE_PATH)

@@ -5,6 +5,8 @@ signal update_player_parameters()
 signal area_entered()
 signal open_bonfire_menu()
 signal bonfire_activated()
+signal play_boss_music()
+signal boss_defeated()
 
 const HEALTH_DROP_VALUE = 10
 
@@ -19,6 +21,7 @@ onready var boss_spawn_point = $BossSpawnPoint
 
 export var custom_name : String
 export var boss : PackedScene
+export var music : AudioStreamMP3
 
 func _ready():
 	emit_signal("area_entered", name)
@@ -129,12 +132,14 @@ func spawn_boss():
 	area_boss.connect("boss_defeated", self, "on_boss_defeated")
 	add_child(area_boss)
 	is_boss_spawned = true
+	emit_signal("play_boss_music")
 	
 func on_boss_defeated():
 	print("boss defeated")
 	level_parameters["is_boss_defeated"] = true
 	for boss_gate in get_node("BossGates").get_children():
 		boss_gate.queue_free()
+	emit_signal("boss_defeated")
 
 #func on_player_touched_drop():
 #	emit_signal("drop_got", HEALTH_DROP_VALUE)

@@ -3,7 +3,6 @@
 [ext_resource path="res://src/Areas/Area.gd" type="Script" id=1]
 [ext_resource path="res://assets/art/TileSets/tile_sets.tres" type="TileSet" id=2]
 
-
 [node name="Area" type="Node2D"]
 pause_mode = 1
 script = ExtResource( 1 )

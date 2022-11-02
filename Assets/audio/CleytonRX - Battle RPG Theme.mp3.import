@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/CleytonRX - Battle RPG Theme.mp3-0e32b9ba5ecf7f2c66d8459ea6720c0c.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/CleytonRX - Battle RPG Theme.mp3"
+dest_files=[ "res://.import/CleytonRX - Battle RPG Theme.mp3-0e32b9ba5ecf7f2c66d8459ea6720c0c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
