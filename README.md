@@ -1,4 +1,4 @@
-# simple_game
+# Metroidvania Game Engine
 
 # Hierarchy
 This engine has several scenes, some of which inherit from other scenes. The following is an explanation
