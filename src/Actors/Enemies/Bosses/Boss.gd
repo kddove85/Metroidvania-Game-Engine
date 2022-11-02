@@ -118,4 +118,3 @@ func face_the_player():
 			direction = -1
 			sprite.scale.x = -1
 	
-
