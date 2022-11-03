@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="SimpleGame"
+config/name="Metroidvania-Game-Engine"
 run/main_scene="res://src/Main/GameManager.tscn"
 config/icon="res://icon.png"
 

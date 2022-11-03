@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SnowyMountainTileSet.png-adf27385863cdaac25e21dbf990a2e3d.stex"
+path="res://.import/SnowyMountainTileSet.png-16757df4afc3edde3430ea7117c93300.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/TileSets/SnowyMountainTileSet.png"
-dest_files=[ "res://.import/SnowyMountainTileSet.png-adf27385863cdaac25e21dbf990a2e3d.stex" ]
+source_file="res://Assets/art/TileSets/SnowyMountainTileSet.png"
+dest_files=[ "res://.import/SnowyMountainTileSet.png-16757df4afc3edde3430ea7117c93300.stex" ]
 
 [params]
 

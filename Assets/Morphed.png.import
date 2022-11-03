@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Morphed.png-51b99bb0d10a220673a716b2df4c9637.stex"
+path="res://.import/Morphed.png-e81952aaae13059a073a6f68937146db.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Morphed.png"
-dest_files=[ "res://.import/Morphed.png-51b99bb0d10a220673a716b2df4c9637.stex" ]
+source_file="res://Assets/Morphed.png"
+dest_files=[ "res://.import/Morphed.png-e81952aaae13059a073a6f68937146db.stex" ]
 
 [params]
 
