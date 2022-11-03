@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Projectiles/GenericProjectile.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/art/Projectiles/EnemyProjectile.png" type="Texture" id=2]
+[ext_resource path="res://assets/art/Projectiles/EnemyProjectile.png" type="Texture" id=2]
 [ext_resource path="res://src/Projectiles/EnemyProjectile.gd" type="Script" id=3]
 
 [sub_resource type="AtlasTexture" id=1]

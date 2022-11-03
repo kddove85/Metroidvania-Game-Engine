@@ -2,12 +2,12 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.import/mysterious-anomaly.mp3-3594871a9dbb4ecbb63c026f9cbd2871.mp3str"
+path="res://.import/mysterious-anomaly.mp3-3c90f412a117939bb87eb742582c8cc8.mp3str"
 
 [deps]
 
-source_file="res://Assets/audio/mysterious-anomaly.mp3"
-dest_files=[ "res://.import/mysterious-anomaly.mp3-3594871a9dbb4ecbb63c026f9cbd2871.mp3str" ]
+source_file="res://assets/audio/mysterious-anomaly.mp3"
+dest_files=[ "res://.import/mysterious-anomaly.mp3-3c90f412a117939bb87eb742582c8cc8.mp3str" ]
 
 [params]
 

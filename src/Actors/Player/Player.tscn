@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/Actors/Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/art/Actors/Morphed.png" type="Texture" id=2]
-[ext_resource path="res://Assets/art/Actors/Character.png" type="Texture" id=3]
+[ext_resource path="res://assets/art/Actors/Morphed.png" type="Texture" id=2]
+[ext_resource path="res://assets/art/Actors/Character.png" type="Texture" id=3]
 [ext_resource path="res://src/Actors/Player/Staff.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Actors/Actor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Actors/HurtBox.tscn" type="PackedScene" id=6]

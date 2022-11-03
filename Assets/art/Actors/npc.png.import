@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/npc.png-132155c4b5d91d4f18bd2dadb85125ed.stex"
+path="res://.import/npc.png-ba1861d1e0b42d1564330a1abe8c6029.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/Actors/npc.png"
-dest_files=[ "res://.import/npc.png-132155c4b5d91d4f18bd2dadb85125ed.stex" ]
+source_file="res://assets/art/Actors/npc.png"
+dest_files=[ "res://.import/npc.png-ba1861d1e0b42d1564330a1abe8c6029.stex" ]
 
 [params]
 

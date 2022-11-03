@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Morphed.png-597442c0fb121f37e7b0ae2190f4cd57.stex"
+path="res://.import/Morphed.png-e307826bfece815cac0a8dfd464b79c8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/Actors/Morphed.png"
-dest_files=[ "res://.import/Morphed.png-597442c0fb121f37e7b0ae2190f4cd57.stex" ]
+source_file="res://assets/art/Actors/Morphed.png"
+dest_files=[ "res://.import/Morphed.png-e307826bfece815cac0a8dfd464b79c8.stex" ]
 
 [params]
 

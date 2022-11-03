@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/EnemyProjectile.png-7f6bd3c152123149af0d9947bde6b477.stex"
+path="res://.import/EnemyProjectile.png-0ed00c3bf8f84179c8edfc72617d72f7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/Projectiles/EnemyProjectile.png"
-dest_files=[ "res://.import/EnemyProjectile.png-7f6bd3c152123149af0d9947bde6b477.stex" ]
+source_file="res://assets/art/Projectiles/EnemyProjectile.png"
+dest_files=[ "res://.import/EnemyProjectile.png-0ed00c3bf8f84179c8edfc72617d72f7.stex" ]
 
 [params]
 

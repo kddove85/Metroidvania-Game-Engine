@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Bonfire1.png-efa7501f88fc16bcb800f958e7f6642e.stex"
+path="res://.import/Bonfire1.png-6682939816f52ec06fcfdac9ad8842a6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/Objects/Bonfire1.png"
-dest_files=[ "res://.import/Bonfire1.png-efa7501f88fc16bcb800f958e7f6642e.stex" ]
+source_file="res://assets/art/Objects/Bonfire1.png"
+dest_files=[ "res://.import/Bonfire1.png-6682939816f52ec06fcfdac9ad8842a6.stex" ]
 
 [params]
 

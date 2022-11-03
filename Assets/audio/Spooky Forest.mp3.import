@@ -2,12 +2,12 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.import/Spooky Forest.mp3-93247debfed13fdcad0e4bf9197f8eab.mp3str"
+path="res://.import/Spooky Forest.mp3-1eb5d36932ee796cb859fd64dacf56ad.mp3str"
 
 [deps]
 
-source_file="res://Assets/audio/Spooky Forest.mp3"
-dest_files=[ "res://.import/Spooky Forest.mp3-93247debfed13fdcad0e4bf9197f8eab.mp3str" ]
+source_file="res://assets/audio/Spooky Forest.mp3"
+dest_files=[ "res://.import/Spooky Forest.mp3-1eb5d36932ee796cb859fd64dacf56ad.mp3str" ]
 
 [params]
 

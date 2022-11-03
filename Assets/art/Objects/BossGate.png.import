@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BossGate.png-6fa7faee9441f100ca2640aa3ddfa593.stex"
+path="res://.import/BossGate.png-bc26a34d257e15ef9f75dd882c0b784b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/Objects/BossGate.png"
-dest_files=[ "res://.import/BossGate.png-6fa7faee9441f100ca2640aa3ddfa593.stex" ]
+source_file="res://assets/art/Objects/BossGate.png"
+dest_files=[ "res://.import/BossGate.png-bc26a34d257e15ef9f75dd882c0b784b.stex" ]
 
 [params]
 

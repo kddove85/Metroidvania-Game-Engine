@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/NPCs/NPC.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/NPCs/Ben.gd" type="Script" id=2]
-[ext_resource path="res://Assets/art/Actors/npc.png" type="Texture" id=3]
+[ext_resource path="res://assets/art/Actors/npc.png" type="Texture" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {

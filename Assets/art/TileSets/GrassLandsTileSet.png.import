@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GrassLandsTileSet.png-37286c1574a84845fbb8f5b7438911d4.stex"
+path="res://.import/GrassLandsTileSet.png-4c3467b981a9f99c61760b004d70c2e6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/TileSets/GrassLandsTileSet.png"
-dest_files=[ "res://.import/GrassLandsTileSet.png-37286c1574a84845fbb8f5b7438911d4.stex" ]
+source_file="res://assets/art/TileSets/GrassLandsTileSet.png"
+dest_files=[ "res://.import/GrassLandsTileSet.png-4c3467b981a9f99c61760b004d70c2e6.stex" ]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/Projectiles/PlayerProjectile.gd" type="Script" id=1]
 [ext_resource path="res://src/Projectiles/GenericProjectile.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/art/Projectiles/PlayerProjectileA.png" type="Texture" id=3]
+[ext_resource path="res://assets/art/Projectiles/PlayerProjectileA.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 7, 7 )
