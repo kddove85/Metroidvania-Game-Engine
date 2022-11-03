@@ -1,30 +1,13 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/Objects/Bonfire.gd" type="Script" id=1]
-[ext_resource path="res://assets/Bonfire1.png" type="Texture" id=2]
-[ext_resource path="res://assets/fire_particle.png" type="Texture" id=3]
-[ext_resource path="res://assets/Up.png" type="Texture" id=4]
-[ext_resource path="res://assets/Bonfire2.png" type="Texture" id=5]
-
+[ext_resource path="res://Assets/art/Objects/Bonfire2.png" type="Texture" id=2]
+[ext_resource path="res://Assets/art/Objects/Bonfire1.png" type="Texture" id=3]
+[ext_resource path="res://src/UI/PressUp.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/art/Particles/fire_particle.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 13 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 4 )
-region = Rect2( 24, 0, 24, 24 )
-
-[sub_resource type="SpriteFrames" id=8]
-animations = [ {
-"frames": [ SubResource( 6 ), SubResource( 7 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
 
 [sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
@@ -60,18 +43,13 @@ script = ExtResource( 1 )
 position = Vector2( 0, 3 )
 shape = SubResource( 1 )
 
+[node name="PressUp" parent="." instance=ExtResource( 4 )]
+frame = 0
+
 [node name="Rocks" type="Sprite" parent="."]
 z_index = -1
 z_as_relative = false
-texture = ExtResource( 2 )
-
-[node name="PressUp" type="AnimatedSprite" parent="."]
-visible = false
-position = Vector2( 0, -46 )
-z_index = 1
-frames = SubResource( 8 )
-frame = 1
-playing = true
+texture = ExtResource( 3 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 material = SubResource( 2 )
@@ -85,12 +63,12 @@ preprocess = 0.1
 speed_scale = 1.5
 randomness = 1.0
 process_material = SubResource( 5 )
-texture = ExtResource( 3 )
+texture = ExtResource( 5 )
 
 [node name="Sword" type="Sprite" parent="."]
 z_index = -3
 z_as_relative = false
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5

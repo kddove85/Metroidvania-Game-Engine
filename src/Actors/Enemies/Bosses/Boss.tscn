@@ -1,19 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Actors/Enemies/Bosses/Boss.gd" type="Script" id=1]
 [ext_resource path="res://src/Actors/Enemies/Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/Boss.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 24 )
-
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 8, 24 )
@@ -35,7 +26,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" parent="." index="1"]
 position = Vector2( 0, 0 )
-frames = SubResource( 2 )
+frames = null
 
 [node name="ProjectileSpawnPoint" type="Position2D" parent="AnimatedSprite" index="0"]
 position = Vector2( 18, 0 )

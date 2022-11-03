@@ -2,7 +2,6 @@
 
 [ext_resource path="res://src/Areas/Room.gd" type="Script" id=1]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 300 )
 
@@ -19,6 +18,8 @@ shape = SubResource( 1 )
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
 [node name="Enemies" type="Node2D" parent="."]
+
+[node name="Platforms" type="Node2D" parent="."]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered" flags=3]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]

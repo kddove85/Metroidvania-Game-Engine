@@ -3,7 +3,6 @@
 [ext_resource path="res://src/Projectiles/GenericProjectile.gd" type="Script" id=1]
 [ext_resource path="res://src/Actors/Hitbox.tscn" type="PackedScene" id=2]
 
-
 [node name="GenericProjectile" instance=ExtResource( 2 )]
 collision_mask = 0
 script = ExtResource( 1 )

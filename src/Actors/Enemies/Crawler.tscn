@@ -2,8 +2,7 @@
 
 [ext_resource path="res://src/Actors/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Actors/Enemies/Crawler.gd" type="Script" id=2]
-[ext_resource path="res://assets/enemy.png" type="Texture" id=3]
-
+[ext_resource path="res://Assets/art/Actors/enemy.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
