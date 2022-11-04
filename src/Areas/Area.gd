@@ -2,6 +2,7 @@ extends Node2D
 
 signal update_level_parameters()
 signal update_player_parameters()
+signal update_player_abilities()
 signal area_entered()
 signal open_bonfire_menu()
 signal bonfire_activated()
@@ -47,9 +48,8 @@ func create_level_params():
 			level_parameters["is_%s_activated" % bonfire.name] = false
 		level_parameters["is_boss_defeated"] = false
 			
-func spawn_player(player_parameters):
+func spawn_player(player_parameters, player_abilities):
 	var player = load("res://src/Actors/Player/Player.tscn").instance()
-#	var player = load("res://Scenes/Actors/Player/Player.tscn").instance()
 	add_child(player)
 	if player_parameters != null:
 		player.stats.max_hp = player_parameters["max_hp"]
@@ -57,7 +57,12 @@ func spawn_player(player_parameters):
 		player.player_update_hud()
 	else:
 		emit_signal("update_player_parameters", player)
-
+		
+	if player_abilities != null:
+		player.abilities.abilities = player_abilities
+	else:
+		emit_signal("update_player_abilities", player)
+	
 func move_player(dict):
 	var player = get_node("Player")
 	match dict.type:
@@ -80,16 +85,12 @@ func spawn_collectibles():
 			spawn_collectible(child)
 
 func spawn_collectible(child):
-	match child.item_to_spawn._bundled.names[0]:
-		ETANK:
-			spawn_etank(child.id, child.get_position())
-	
-func spawn_etank(id, spawn_point):
-	var etank_instance = etank.instance()
-	etank_instance.id = id
-	etank_instance.connect("player_collected_item", self, "on_player_collected_item")
-	etank_instance.global_position = spawn_point
-	add_child(etank_instance)
+	var collectible_instance = child.item_to_spawn.instance()
+	collectible_instance.id = child.id
+	collectible_instance.type = child.type
+	collectible_instance.connect("player_collected_item", self, "on_player_collected_item")
+	collectible_instance.global_position = child.get_position()
+	add_child(collectible_instance)
 
 func connect_bonfires():
 	var bonfires = get_node("Bonfires").get_children()
@@ -124,7 +125,9 @@ func on_player_collected_item(type, id):
 	var player = get_node("Player")
 	player.item_collected(type)
 	emit_signal("update_player_parameters", player)
+	emit_signal("update_player_abilities", player)
 	emit_signal("update_level_parameters", self.name, level_parameters)
+	print("on player collected item")
 	
 func spawn_boss():
 	var area_boss = boss.instance()

@@ -15,6 +15,7 @@ var music_menu = preload("res://assets/audio/mysterious-anomaly.mp3")
 var music_boss = preload("res://assets/audio/CleytonRX - Battle RPG Theme.mp3")
 
 var player_parameters = null
+var player_abilities = null
 var area_parameters = {
 	AREA_A: null,
 	AREA_B: null,
@@ -67,6 +68,7 @@ func get_area(area):
 func add_area(area, dict):
 	area.connect("update_level_parameters", self, "on_update_level_parameters")
 	area.connect("update_player_parameters", self, "on_update_player_parameters")
+	area.connect("update_player_abilities", self, "on_update_player_abilities")
 	area.connect("area_entered", self, "on_area_entered")
 	area.connect("bonfire_activated", self, "on_bonfire_activated")
 	area.connect("open_bonfire_menu", self, "on_open_bonfire_menu")
@@ -79,7 +81,7 @@ func add_area(area, dict):
 	if area_parameters[area.name] != null:
 		area.load_parameters(area_parameters[area.name])
 	add_child(area)
-	area.spawn_player(player_parameters)
+	area.spawn_player(player_parameters, player_abilities)
 	area.move_player(dict)
 	area.get_node("Player").connect("game_over", self, "on_game_over")
 	
@@ -93,13 +95,18 @@ func on_reset():
 	get_tree().reload_current_scene()
 	
 func on_update_level_parameters(area, new_area_parameters):
+	print("on update level params")
 	area_parameters[area] = new_area_parameters
 	
 func on_update_player_parameters(player):
+	print("on update player params")
 	player_parameters = {
 		"max_hp": player.stats.max_hp,
 		"current_hp": player.stats.current_hp
 	}
+	
+func on_update_player_abilities(player):
+	player_abilities = player.abilities.abilities
 	
 func on_area_entered(area_name):
 	current_area = area_name
@@ -162,6 +169,7 @@ func on_open_dialogue(dialogue):
 func save_game():
 	var config = ConfigFile.new()
 	config.set_value("player", "player_params", player_parameters)
+	config.set_value("player", "player_abilities", player_abilities)
 	config.set_value("area", "current_area", current_area)
 	config.set_value("area", "current_bonfire", current_bonfire)
 	config.set_value("bonfires", "activated_bonfires", activated_bonfires)
@@ -180,6 +188,7 @@ func on_load_game():
 	current_bonfire = config.get_value("area", "current_bonfire") if config.get_value("area", "current_bonfire", "none") != "none" else null
 	activated_bonfires = config.get_value("bonfires", "activated_bonfires")
 	player_parameters = config.get_value("player", "player_params")
+	player_abilities = config.get_value("player", "player_abilities")
 	area_parameters[AREA_A] = config.get_value(AREA_A, "area_parameters") if config.get_value(AREA_A, "area_parameters", "none") is Dictionary else null
 	area_parameters[AREA_B] = config.get_value(AREA_B, "area_parameters") if config.get_value(AREA_B, "area_parameters", "none") is Dictionary else null
 	area_parameters[AREA_C] = config.get_value(AREA_C, "area_parameters") if config.get_value(AREA_C, "area_parameters", "none") is Dictionary else null

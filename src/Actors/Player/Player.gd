@@ -4,6 +4,7 @@ enum STATES {DEFAULT, MORPHED}
 
 onready var current_state = STATES.DEFAULT
 
+onready var abilities = $Abilities
 onready var camera = $Camera2D
 onready var staff = $Staff
 onready var timer = $Timer
@@ -13,6 +14,8 @@ var is_able_to_unmorph = true
 
 const ETANK = "etank"
 const ETANK_VALUE = 100
+
+const MORPH_BALL = "morph_ball"
 
 signal player_ready()
 signal game_over()
@@ -59,7 +62,7 @@ func _input(_event):
 #	for joypad in joypads:
 #		print(Input.get_joy_name(joypad))
 	if Input.is_action_just_pressed("ui_fire"):
-		var projectile = load("res://src/Projectiles/PlayerProjectileA.tscn").instance()
+		var projectile = load("res://src/Projectiles/PlayerProjectile.tscn").instance()
 		projectile.global_position = projectile_spawn_point.global_position
 		projectile.set_as_toplevel(true)
 		projectile.direction = sprite.scale.x
@@ -70,10 +73,11 @@ func _input(_event):
 		emit_signal("save")
 		
 	if Input.is_action_just_pressed("ui_down") and current_state == STATES.DEFAULT:
-		sprite.play("Morphed")
-		current_state = STATES.MORPHED
-		self.get_node("DefaultShape").disabled = true
-		self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = true
+		if abilities.abilities["can_morph"]:
+			sprite.play("Morphed")
+			current_state = STATES.MORPHED
+			self.get_node("DefaultShape").disabled = true
+			self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = true
 		
 	if Input.is_action_just_pressed("ui_up") and current_state == STATES.MORPHED and is_able_to_unmorph:
 		sprite.play("default")
@@ -82,10 +86,15 @@ func _input(_event):
 		self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = false
 		
 func item_collected(type):
+	print("item collected")
 	if type == ETANK:
+		print("in the code")
 		stats.max_hp = stats.max_hp + ETANK_VALUE
 		stats.current_hp = stats.max_hp
 		player_update_hud()
+	if type == MORPH_BALL:
+		print("found morph ball")
+		abilities.abilities["can_morph"] = true
 		
 func player_update_hud():
 	get_node("HUD").update_hud(self)

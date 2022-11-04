@@ -26,7 +26,6 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" parent="." index="1"]
 position = Vector2( 0, 0 )
-frames = null
 
 [node name="ProjectileSpawnPoint" type="Position2D" parent="AnimatedSprite" index="0"]
 position = Vector2( 18, 0 )
