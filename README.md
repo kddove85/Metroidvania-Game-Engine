@@ -8,7 +8,7 @@ The main scene in the engine is the Game Manager scene. This scene will spawn al
 scenes to be used. For instance, upon starting the game, the game manager will spawn the menu. If 'New Game'
 is selected, then the game manager will free the menu scene and open with the AreaA scene, and so on.
 
-![Diagram](https://raw.githubusercontent.com/kddove85/simple_game/main/Diagram.png)
+![Diagram](https://raw.githubusercontent.com/kddove85/Metroidvania-Game-Engine/main/Diagram.png)
 
 ## Actor
 The Actor class will have variables for speed, gravity, tile size (basically a speed factor) as well as
