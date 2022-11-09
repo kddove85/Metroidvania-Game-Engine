@@ -17,13 +17,12 @@ const ETANK_VALUE = 100
 
 const MORPH_BALL = "morph_ball"
 
+signal update_hud()
 signal player_ready()
 signal game_over()
 
 func _ready():
-	var hud = load("res://src/UI/HUD.tscn").instance()
-	add_child(hud)
-	player_update_hud()
+	pass
 
 func _physics_process(delta):
 	blink()
@@ -69,9 +68,6 @@ func _input(_event):
 		add_child(projectile)
 		staff.play("Fire")
 		
-	if Input.is_action_just_pressed("ui_select"):
-		emit_signal("save")
-		
 	if Input.is_action_just_pressed("ui_down") and current_state == STATES.DEFAULT:
 		if abilities.abilities["can_morph"]:
 			sprite.play("Morphed")
@@ -91,13 +87,12 @@ func item_collected(type):
 		print("in the code")
 		stats.max_hp = stats.max_hp + ETANK_VALUE
 		stats.current_hp = stats.max_hp
-		player_update_hud()
+		emit_signal("update_player_parameters", self)
+		emit_signal("update_hud", self)
 	if type == MORPH_BALL:
 		print("found morph ball")
 		abilities.abilities["can_morph"] = true
-		
-func player_update_hud():
-	get_node("HUD").update_hud(self)
+		emit_signal("update_player_abilities", self)
 
 func _on_RoomDetector_area_entered(area):
 	print("Room Detected")
@@ -123,7 +118,7 @@ func _on_UnmorphDetector_body_exited(_body):
 
 func on_damage(damage):
 	stats.current_hp = stats.current_hp - damage
-	player_update_hud()
+	emit_signal("update_hud")
 	if stats.current_hp <= 0:
 		print("Game Over")
 		# play death animation

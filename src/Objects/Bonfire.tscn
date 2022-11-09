@@ -44,7 +44,6 @@ position = Vector2( 0, 3 )
 shape = SubResource( 1 )
 
 [node name="PressUp" parent="." instance=ExtResource( 4 )]
-frame = 0
 
 [node name="Rocks" type="Sprite" parent="."]
 z_index = -1

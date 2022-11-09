@@ -26,6 +26,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=5]
 
 [node name="MorphBall" instance=ExtResource( 2 )]
+text = "Morph Ball"
 
 [node name="AnimatedSprite" parent="." index="0"]
 frames = SubResource( 4 )

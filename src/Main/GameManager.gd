@@ -9,11 +9,14 @@ const AREA_C = "AreaC"
 const AREA_D = "AreaD"
 const AREA_E = "AreaE"
 
-var music = load("res://src/Main/Music.tscn").instance()
+enum STATES {MAIN_MENU, IN_GAME_ACTIVE, IN_GAME_NOT_ACTIVE}
 
+var user_interface = load("res://src/UI/UserInterface.tscn").instance()
+var music = load("res://src/Main/Music.tscn").instance()
 var music_menu = preload("res://assets/audio/mysterious-anomaly.mp3")
 var music_boss = preload("res://assets/audio/CleytonRX - Battle RPG Theme.mp3")
 
+var player = null
 var player_parameters = null
 var player_abilities = null
 var area_parameters = {
@@ -28,11 +31,23 @@ var activated_bonfires := []
 
 var current_area
 var current_bonfire
+var current_state
 		
 func _ready():
+	current_state = STATES.MAIN_MENU
 	create_save_file()
 	load_menu()
 	
+#func _input(_event):
+#	if Input.is_action_pressed("ui_start") and current_state == STATES.IN_GAME_ACTIVE:
+#		get_tree().paused = true
+#		pause_menu.open()
+#		current_state = STATES.IN_GAME_NOT_ACTIVE
+#	elif Input.is_action_pressed("ui_start") and current_state == STATES.IN_GAME_NOT_ACTIVE:
+#		pause_menu.close()
+#		current_state = STATES.IN_GAME_ACTIVE
+#		get_tree().paused = false
+			
 func create_save_file():
 	var file = File.new()
 	if file.file_exists(ProjectSettings.globalize_path(SAVE_PATH)):
@@ -53,6 +68,8 @@ func load_menu():
 	add_child(music)
 	
 func create_new_game():
+	add_user_interface()
+	current_state = STATES.IN_GAME_ACTIVE
 	var area = get_area(AREA_A)
 	add_area(area, {"type": "new_game"})
 	on_update_level_parameters(AREA_A, area.level_parameters)
@@ -66,31 +83,46 @@ func get_area(area):
 	return area_to_load
 
 func add_area(area, dict):
+	area.connect("open_item_acquired_box", self, "on_open_item_acquired_box")
+	area.connect("open_bonfire_menu", self, "on_open_bonfire_menu")
 	area.connect("update_level_parameters", self, "on_update_level_parameters")
+	
 	area.connect("update_player_parameters", self, "on_update_player_parameters")
 	area.connect("update_player_abilities", self, "on_update_player_abilities")
+	
 	area.connect("area_entered", self, "on_area_entered")
 	area.connect("bonfire_activated", self, "on_bonfire_activated")
-	area.connect("open_bonfire_menu", self, "on_open_bonfire_menu")
 	area.connect("play_boss_music", self, "on_play_boss_music")
 	area.connect("boss_defeated", self, "on_boss_defeated")
 	for connection in area.get_node("Connectors").get_children():
 		connection.connect("change_area", self, "on_change_area")
+		
+	# Kyle
 	for npc in area.get_node("NPCs").get_children():
 		npc.connect("open_dialogue", self, "on_open_dialogue")
+		
 	if area_parameters[area.name] != null:
 		area.load_parameters(area_parameters[area.name])
 	add_child(area)
 	area.spawn_player(player_parameters, player_abilities)
 	area.move_player(dict)
-	area.get_node("Player").connect("game_over", self, "on_game_over")
+	# not 100% sure I want to do this
+	player = area.get_node("Player")
+	player.connect("game_over", self, "on_game_over")
+	player.connect("update_hud", self, "on_update_hud")
+	on_update_hud()
+	
+func on_update_hud():
+	user_interface.hud.update_hud(player)
 	
 func on_game_over():
-	var game_over_screen = load("res://Scenes/UI/GameOverScreen.tscn").instance()
-	add_child(game_over_screen)
-	game_over_screen.connect("reset", self, "on_reset")
+	pass
+#	var game_over_screen = load("res://src/UI/GameOverScreen.tscn").instance()
+#	add_child(game_over_screen)
+#	game_over_screen.connect("reset", self, "on_reset")
 	
 func on_reset():
+	print("on reset")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	
@@ -111,23 +143,20 @@ func on_update_player_abilities(player):
 func on_area_entered(area_name):
 	current_area = area_name
 	
+# This is for the fast travel menu
 func on_bonfire_activated(bonfire_object):
 	activated_bonfires.append(bonfire_object)
 			
 func on_open_bonfire_menu(bonfire_name):
 	current_bonfire = bonfire_name
-	var bonfire_menu = load("res://src/UI/BonfireMenu.tscn").instance()
-	bonfire_menu.load_activated_bonfires(activated_bonfires)
-	bonfire_menu.connect("travel", self, "on_bonfire_travel")
-	var children = get_children()
-	var child_names = []
-	for child in children:
-		child_names.append(child.name)
-	if !("BonfireMenu" in child_names):
-		add_child(bonfire_menu)
-		bonfire_menu.connect("save", self, "save_game")
+	user_interface.open_bonfire_menu()
+	user_interface.load_activated_bonfires(activated_bonfires)
+	player.stats.current_hp = player.stats.max_hp
+	player.stats.current_mp = player.stats.max_mp
+	on_update_hud()
 		
 func on_bonfire_travel(destination):
+	print("on bonfire travel")
 	for bonfire in activated_bonfires:
 		if bonfire.bonfire_custom_name == destination:
 			if bonfire.area_name == current_area:
@@ -162,11 +191,18 @@ func on_change_area(new_area, new_node):
 	
 func on_open_dialogue(dialogue):
 	var dialogue_box = load("res://src/UI/DialogueBox.tscn").instance()
-	dialogue_box.load_text(dialogue)
 	add_child(dialogue_box)
+	dialogue_box.load_text(dialogue)
 	dialogue_box.start()
+	
+func on_open_item_acquired_box(text):
+	var item_acquired_box = load("res://src/UI/ItemAcquiredBox.tscn").instance()
+	add_child(item_acquired_box)
+	item_acquired_box.load_text(text)
+	item_acquired_box.animation_player.play("Open")
 		
 func save_game():
+	print("game saved")
 	var config = ConfigFile.new()
 	config.set_value("player", "player_params", player_parameters)
 	config.set_value("player", "player_abilities", player_abilities)
@@ -181,6 +217,8 @@ func save_game():
 	config.save(SAVE_PATH)
 	
 func on_load_game():
+	add_user_interface()
+	current_state = STATES.IN_GAME_ACTIVE
 	get_node("MainMenu").queue_free()
 	var config = ConfigFile.new()
 	config.load(SAVE_PATH)
@@ -196,6 +234,12 @@ func on_load_game():
 	area_parameters[AREA_E] = config.get_value(AREA_E, "area_parameters") if config.get_value(AREA_E, "area_parameters", "none") is Dictionary else null
 	var area = get_area(current_area)
 	add_area(area, {"type": "load_game", "bonfire": current_bonfire})
+	
+func add_user_interface():
+	add_child(user_interface)
+#	user_interface.bonfire_menu.connect("travel", self, "on_bonfire_travel")
+	user_interface.bonfire_menu.connect("save", self, "save_game")
+	user_interface.bonfire_travel_menu.connect("warp", self, "on_bonfire_travel")
 	
 func on_options():
 	print("options")

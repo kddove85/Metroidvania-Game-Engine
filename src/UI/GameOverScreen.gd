@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 onready var animation_player = $AnimationPlayer
 var is_ready = false
@@ -12,7 +12,7 @@ func _ready():
 func play():
 	animation_player.play("Play")
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_animation_finished(_anim_name):
 	is_ready = true
 	
 func _input(_event):

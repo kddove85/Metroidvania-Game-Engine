@@ -1,8 +1,8 @@
-extends CanvasLayer
+extends Control
 
 # Nodes
-onready var rtl = $Control/Polygon2D/RichTextLabel
-onready var aniplayer = $Control/Polygon2D/AnimationPlayer
+onready var rtl = $Panel/RichTextLabel
+onready var aniplayer = $Panel/AnimationPlayer
 
 # Enums
 enum state {OPENING, ACTIVE, CLOSING, CLOSED}
@@ -12,6 +12,9 @@ onready var current_state = state.CLOSED
 onready var page = 0
 
 var text
+
+func _ready():
+	hide()
 
 func load_text(new_text):
 	text = new_text
