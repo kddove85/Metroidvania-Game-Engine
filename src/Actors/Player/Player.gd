@@ -9,6 +9,8 @@ onready var camera = $Camera2D
 onready var staff = $Staff
 onready var timer = $Timer
 onready var projectile_spawn_point = $AnimatedSprite/ProjectileSpawnPoint
+onready var hitbox = $Hurtboxes/HurtBox/CollisionShape2D
+onready var morph_hitbox = $Hurtboxes/MorphHitbox/CollisionShape2D
 
 var is_able_to_unmorph = true
 
@@ -17,13 +19,14 @@ const ETANK_VALUE = 100
 
 const MORPH_BALL = "morph_ball"
 
+signal update_hud()
+signal update_player_parameters()
+signal update_player_abilities()
 signal player_ready()
 signal game_over()
 
 func _ready():
-	var hud = load("res://src/UI/HUD.tscn").instance()
-	add_child(hud)
-	player_update_hud()
+	morph_hitbox.disabled = true
 
 func _physics_process(delta):
 	blink()
@@ -69,35 +72,34 @@ func _input(_event):
 		add_child(projectile)
 		staff.play("Fire")
 		
-	if Input.is_action_just_pressed("ui_select"):
-		emit_signal("save")
-		
 	if Input.is_action_just_pressed("ui_down") and current_state == STATES.DEFAULT:
 		if abilities.abilities["can_morph"]:
 			sprite.play("Morphed")
 			current_state = STATES.MORPHED
 			self.get_node("DefaultShape").disabled = true
-			self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = true
+			self.hitbox.disabled = true
+			self.morph_hitbox.disabled = false
 		
 	if Input.is_action_just_pressed("ui_up") and current_state == STATES.MORPHED and is_able_to_unmorph:
 		sprite.play("default")
 		current_state = STATES.DEFAULT
 		self.get_node("DefaultShape").disabled = false
-		self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = false
+		self.hitbox.disabled = false
+		self.morph_hitbox.disabled = true
 		
+# TODO: Fix this
 func item_collected(type):
 	print("item collected")
 	if type == ETANK:
 		print("in the code")
 		stats.max_hp = stats.max_hp + ETANK_VALUE
 		stats.current_hp = stats.max_hp
-		player_update_hud()
+		emit_signal("update_player_parameters") # Error
+		emit_signal("update_hud") # Error
 	if type == MORPH_BALL:
 		print("found morph ball")
 		abilities.abilities["can_morph"] = true
-		
-func player_update_hud():
-	get_node("HUD").update_hud(self)
+		emit_signal("update_player_abilities")
 
 func _on_RoomDetector_area_entered(area):
 	print("Room Detected")
@@ -123,7 +125,7 @@ func _on_UnmorphDetector_body_exited(_body):
 
 func on_damage(damage):
 	stats.current_hp = stats.current_hp - damage
-	player_update_hud()
+	emit_signal("update_hud")
 	if stats.current_hp <= 0:
 		print("Game Over")
 		# play death animation

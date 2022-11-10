@@ -1,25 +1,33 @@
-extends CanvasLayer
+extends Control
 
-onready var vbox = $Control/VBoxContainer
+onready var vbox = $VBoxContainer
 
 signal grant_focus()
-signal travel()
+signal warp()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-	
+	hide()
+
+func open(bonfires):
+	load_activated_bonfires(bonfires)
+	show()
+
 func load_activated_bonfires(activated_bonfires: Array):
 	for bonfire in activated_bonfires:
 		add_bonfire_button(bonfire)
 	if vbox.get_child_count() > 0:
-		print("Grabbing Focus")
 		vbox.get_child(0).grab_focus()
 		
-func _input(_event):
-	if Input.is_action_just_pressed("ui_cancel"):
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel") and visible:
 		emit_signal("grant_focus")
-		self.queue_free()
+		clear_activated_bonfires()
+		hide()
+		
+func clear_activated_bonfires():
+	for bonfire in vbox.get_children():
+		bonfire.queue_free()
 		
 func add_bonfire_button(bonfire):
 	var button = Button.new()
@@ -29,5 +37,6 @@ func add_bonfire_button(bonfire):
 	vbox.add_child(button)
 	
 func on_pressed(button):
-	emit_signal("travel", button.text)
-	self.queue_free()
+	clear_activated_bonfires()
+	hide()
+	emit_signal("warp", button.text)

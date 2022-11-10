@@ -1,19 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/art/UI/hud.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/HUD.gd" type="Script" id=2]
 [ext_resource path="res://assets/themes/hud.tres" type="Theme" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.152941, 0.133333, 0.572549, 1 )
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 script = ExtResource( 2 )
-
-[node name="Sprite" type="Sprite" parent="."]
-visible = false
-texture = ExtResource( 1 )
-centered = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 margin_left = 16.0

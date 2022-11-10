@@ -13,6 +13,3 @@ func create_abilities():
 		abilities = {}
 	abilities["can_morph"] = false
 	abilities["can_dash"] = false
-
-func update_abilities(ability : String):
-	pass

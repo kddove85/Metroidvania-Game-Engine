@@ -1,5 +1,7 @@
 extends "res://src/Actors/Actor.gd"
 
+export var custom_name : String
+
 onready var player_scan_area = $PlayerScanArea
 
 var current_state

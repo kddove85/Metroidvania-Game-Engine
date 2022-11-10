@@ -1,12 +1,12 @@
-extends CanvasLayer
+extends Control
 
-onready var health_bar = $Control/HealthBar
-onready var boss_name = $Control/BossName
+onready var health_bar = $HealthBar
+onready var boss_name = $BossName
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

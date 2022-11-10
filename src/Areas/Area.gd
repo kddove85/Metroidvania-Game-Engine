@@ -5,14 +5,16 @@ signal update_player_parameters()
 signal update_player_abilities()
 signal area_entered()
 signal open_bonfire_menu()
+signal open_item_acquired_box()
 signal bonfire_activated()
 signal play_boss_music()
+signal display_boss_health_bar()
 signal boss_defeated()
 
 const HEALTH_DROP_VALUE = 10
 
 var ETANK = "ETank"
-var etank = load("res://src/Collectibles/Etank.tscn")
+var etank = load("res://src/Collectibles/ETank.tscn")
 
 var level_parameters
 var health_drop
@@ -29,6 +31,7 @@ func _ready():
 	create_level_params()
 	spawn_collectibles()
 	connect_bonfires()
+	connect_gates()
 	
 # load parameters is only called on load game
 func load_parameters(new_level_parameters: Dictionary):
@@ -46,6 +49,9 @@ func create_level_params():
 		var bonfires = get_node("Bonfires").get_children()
 		for bonfire in bonfires:
 			level_parameters["is_%s_activated" % bonfire.name] = false
+		var gates = get_node("Gates").get_children()
+		for gate in gates:
+			level_parameters["is_%s_activated" % gate.name] = false
 		level_parameters["is_boss_defeated"] = false
 			
 func spawn_player(player_parameters, player_abilities):
@@ -54,14 +60,13 @@ func spawn_player(player_parameters, player_abilities):
 	if player_parameters != null:
 		player.stats.max_hp = player_parameters["max_hp"]
 		player.stats.current_hp = player_parameters["current_hp"]
-		player.player_update_hud()
 	else:
 		emit_signal("update_player_parameters", player)
 		
 	if player_abilities != null:
 		player.abilities.abilities = player_abilities
 	else:
-		emit_signal("update_player_abilities", player)
+		emit_signal("update_player_abilities")
 	
 func move_player(dict):
 	var player = get_node("Player")
@@ -106,7 +111,6 @@ func on_open_bonfire_menu(bonfire_name):
 	var player = get_node("Player")
 	player.stats.current_hp = player.stats.max_hp
 	player.stats.current_mp = player.stats.max_mp
-	player.player_update_hud()
 	get_tree().paused = true
 	
 func on_bonfire_activated(bonfire):
@@ -119,13 +123,22 @@ func on_bonfire_activated(bonfire):
 		"bonfire_custom_name": bonfire.custom_name
 	}
 	emit_signal("bonfire_activated", bonfire_object)
-
-func on_player_collected_item(type, id):
+	
+func connect_gates():
+	var gates = get_node("Gates").get_children()
+	for gate in gates:
+		gate.connect("gate_activated", self, "on_gate_activated")
+		if level_parameters["is_%s_activated" % gate.name]:
+			gate.activate_gate()
+			
+func on_gate_activated(gate):
+	level_parameters["is_%s_activated" % gate.name] = true
+	emit_signal("update_level_parameters", self.name, level_parameters)
+	
+func on_player_collected_item(type, id, text):
 	level_parameters["is_%s_collected" % id] = true
-	var player = get_node("Player")
-	player.item_collected(type)
-	emit_signal("update_player_parameters", player)
-	emit_signal("update_player_abilities", player)
+	get_node("Player").item_collected(type)
+	emit_signal("open_item_acquired_box", text)
 	emit_signal("update_level_parameters", self.name, level_parameters)
 	print("on player collected item")
 	
@@ -136,6 +149,10 @@ func spawn_boss():
 	add_child(area_boss)
 	is_boss_spawned = true
 	emit_signal("play_boss_music")
+	emit_signal("display_boss_health_bar", area_boss)
+	
+func _spawn_boss():
+	pass
 	
 func on_boss_defeated():
 	print("boss defeated")
