@@ -31,22 +31,10 @@ var activated_bonfires := []
 
 var current_area
 var current_bonfire
-var current_state
 		
 func _ready():
-	current_state = STATES.MAIN_MENU
 	create_save_file()
 	load_menu()
-	
-#func _input(_event):
-#	if Input.is_action_pressed("ui_start") and current_state == STATES.IN_GAME_ACTIVE:
-#		get_tree().paused = true
-#		pause_menu.open()
-#		current_state = STATES.IN_GAME_NOT_ACTIVE
-#	elif Input.is_action_pressed("ui_start") and current_state == STATES.IN_GAME_NOT_ACTIVE:
-#		pause_menu.close()
-#		current_state = STATES.IN_GAME_ACTIVE
-#		get_tree().paused = false
 			
 func create_save_file():
 	var file = File.new()
@@ -69,7 +57,6 @@ func load_menu():
 	
 func create_new_game():
 	add_user_interface()
-	current_state = STATES.IN_GAME_ACTIVE
 	var area = get_area(AREA_A)
 	add_area(area, {"type": "new_game"})
 	on_update_level_parameters(AREA_A, area.level_parameters)
@@ -96,17 +83,15 @@ func add_area(area, dict):
 	area.connect("boss_defeated", self, "on_boss_defeated")
 	for connection in area.get_node("Connectors").get_children():
 		connection.connect("change_area", self, "on_change_area")
-		
-	# Kyle
 	for npc in area.get_node("NPCs").get_children():
 		npc.connect("open_dialogue", self, "on_open_dialogue")
-		
 	if area_parameters[area.name] != null:
 		area.load_parameters(area_parameters[area.name])
 	add_child(area)
 	area.spawn_player(player_parameters, player_abilities)
 	area.move_player(dict)
-	# not 100% sure I want to do this
+	
+	# TODO: Not 100% sure I want to do this
 	player = area.get_node("Player")
 	player.connect("game_over", self, "on_game_over")
 	player.connect("update_hud", self, "on_update_hud")
@@ -115,6 +100,7 @@ func add_area(area, dict):
 func on_update_hud():
 	user_interface.hud.update_hud(player)
 	
+# TODO: Fix game over
 func on_game_over():
 	pass
 #	var game_over_screen = load("res://src/UI/GameOverScreen.tscn").instance()
@@ -130,6 +116,7 @@ func on_update_level_parameters(area, new_area_parameters):
 	print("on update level params")
 	area_parameters[area] = new_area_parameters
 	
+# TODO: Fix variable shadowing
 func on_update_player_parameters(player):
 	print("on update player params")
 	player_parameters = {
@@ -137,6 +124,7 @@ func on_update_player_parameters(player):
 		"current_hp": player.stats.current_hp
 	}
 	
+# TODO: Fix variable shadowing
 func on_update_player_abilities(player):
 	player_abilities = player.abilities.abilities
 	
@@ -190,16 +178,15 @@ func on_change_area(new_area, new_node):
 	add_area(area, {"type": "connector", "new_node": new_node})
 	
 func on_open_dialogue(dialogue):
-	var dialogue_box = load("res://src/UI/DialogueBox.tscn").instance()
-	add_child(dialogue_box)
-	dialogue_box.load_text(dialogue)
-	dialogue_box.start()
+	user_interface.load_dialogue(dialogue)
+	user_interface.start_dialogue()
 	
 func on_open_item_acquired_box(text):
-	var item_acquired_box = load("res://src/UI/ItemAcquiredBox.tscn").instance()
-	add_child(item_acquired_box)
-	item_acquired_box.load_text(text)
-	item_acquired_box.animation_player.play("Open")
+#	var item_acquired_box = load("res://src/UI/ItemAcquiredBox.tscn").instance()
+#	add_child(item_acquired_box)
+	user_interface.load_item_acquired_text(text)
+	user_interface.start_item_acquired()
+#	item_acquired_box.animation_player.play("Open")
 		
 func save_game():
 	print("game saved")
@@ -218,7 +205,6 @@ func save_game():
 	
 func on_load_game():
 	add_user_interface()
-	current_state = STATES.IN_GAME_ACTIVE
 	get_node("MainMenu").queue_free()
 	var config = ConfigFile.new()
 	config.load(SAVE_PATH)

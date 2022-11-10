@@ -14,7 +14,7 @@ onready var page = 0
 var text
 
 func _ready():
-	hide()
+	pass
 
 func load_text(new_text):
 	text = new_text
@@ -62,14 +62,12 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		var previous_state = current_state
 		if previous_state == state.OPENING:
 			current_state = state.ACTIVE
-			print("Here")
 		get_text(text)
 	if anim_name == "Close":
 		page = 0
 		rtl.clear()
 		current_state = state.CLOSED
 		get_tree().paused = false
-		self.queue_free()
 
 func _on_Timer_timeout():
 	rtl.set_visible_characters(rtl.get_visible_characters() + 1)

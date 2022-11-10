@@ -10,10 +10,19 @@ var current_state = STATES.CLOSED
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	hide()
+	pass
 
 func load_text(new_text):
 	text_box.text = new_text
+	
+func start():
+	open()
+	
+func open():
+	var previous_state = current_state
+	if previous_state == STATES.CLOSED:
+		animation_player.play("Open")
+		current_state = STATES.OPENING
 
 func _input(_event):
 	if Input.is_action_just_pressed("ui_accept") and current_state == STATES.ACTIVE:
@@ -28,4 +37,3 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "Close":
 		current_state = STATES.CLOSED
 		get_tree().paused = false
-		self.queue_free()

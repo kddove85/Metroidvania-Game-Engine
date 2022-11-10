@@ -9,6 +9,8 @@ onready var camera = $Camera2D
 onready var staff = $Staff
 onready var timer = $Timer
 onready var projectile_spawn_point = $AnimatedSprite/ProjectileSpawnPoint
+onready var hitbox = $Hurtboxes/HurtBox/CollisionShape2D
+onready var morph_hitbox = $Hurtboxes/MorphHitbox/CollisionShape2D
 
 var is_able_to_unmorph = true
 
@@ -22,7 +24,7 @@ signal player_ready()
 signal game_over()
 
 func _ready():
-	pass
+	morph_hitbox.disabled = true
 
 func _physics_process(delta):
 	blink()
@@ -73,22 +75,25 @@ func _input(_event):
 			sprite.play("Morphed")
 			current_state = STATES.MORPHED
 			self.get_node("DefaultShape").disabled = true
-			self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = true
+			self.hitbox.disabled = true
+			self.morph_hitbox.disabled = false
 		
 	if Input.is_action_just_pressed("ui_up") and current_state == STATES.MORPHED and is_able_to_unmorph:
 		sprite.play("default")
 		current_state = STATES.DEFAULT
 		self.get_node("DefaultShape").disabled = false
-		self.get_node("Hurtboxes/HurtBox/CollisionShape2D").disabled = false
+		self.hitbox.disabled = false
+		self.morph_hitbox.disabled = true
 		
+# TODO: Fix this
 func item_collected(type):
 	print("item collected")
 	if type == ETANK:
 		print("in the code")
 		stats.max_hp = stats.max_hp + ETANK_VALUE
 		stats.current_hp = stats.max_hp
-		emit_signal("update_player_parameters", self)
-		emit_signal("update_hud", self)
+		emit_signal("update_player_parameters", self) # Error
+		emit_signal("update_hud", self) # Error
 	if type == MORPH_BALL:
 		print("found morph ball")
 		abilities.abilities["can_morph"] = true

@@ -39,9 +39,27 @@ func on_grant_focus():
 
 func on_warp(_text):
 	bonfire_menu.close()
+	
+func load_dialogue(new_dialogue):
+	dialogue_box.load_text(new_dialogue)
+
+func start_dialogue():
+	dialogue_box.start()
+	can_pause_menu_be_opened = false
+	
+func load_item_acquired_text(new_text):
+	item_acquired_box.load_text(new_text)
+
+func start_item_acquired():
+	item_acquired_box.start()
+	can_pause_menu_be_opened = false
 
 func _on_BonfireMenu_hide():
 	can_pause_menu_be_opened = true
 
 func _on_Travel_pressed():
 	bonfire_travel_menu.open(activated_bonfires)
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "Close":
+		can_pause_menu_be_opened = true
