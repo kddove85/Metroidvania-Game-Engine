@@ -14,6 +14,7 @@ animations = [ {
 
 [node name="ForgottenSoldier" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+custom_name = "Forgotten Soldier"
 
 [node name="AnimatedSprite" parent="." index="1"]
 frames = SubResource( 1 )

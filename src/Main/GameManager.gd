@@ -19,6 +19,7 @@ var music_boss = preload("res://assets/audio/CleytonRX - Battle RPG Theme.mp3")
 var player = null
 var player_parameters = null
 var player_abilities = null
+
 var area_parameters = {
 	AREA_A: null,
 	AREA_B: null,
@@ -60,6 +61,8 @@ func create_new_game():
 	var area = get_area(AREA_A)
 	add_area(area, {"type": "new_game"})
 	on_update_level_parameters(AREA_A, area.level_parameters)
+	on_update_player_parameters()
+	on_update_player_abilities()
 	save_game()
 	get_node("MainMenu").queue_free()
 
@@ -73,13 +76,10 @@ func add_area(area, dict):
 	area.connect("open_item_acquired_box", self, "on_open_item_acquired_box")
 	area.connect("open_bonfire_menu", self, "on_open_bonfire_menu")
 	area.connect("update_level_parameters", self, "on_update_level_parameters")
-	
-	area.connect("update_player_parameters", self, "on_update_player_parameters")
-	area.connect("update_player_abilities", self, "on_update_player_abilities")
-	
 	area.connect("area_entered", self, "on_area_entered")
 	area.connect("bonfire_activated", self, "on_bonfire_activated")
 	area.connect("play_boss_music", self, "on_play_boss_music")
+	area.connect("display_boss_health_bar", self, "on_display_boss_health_bar")
 	area.connect("boss_defeated", self, "on_boss_defeated")
 	for connection in area.get_node("Connectors").get_children():
 		connection.connect("change_area", self, "on_change_area")
@@ -91,10 +91,11 @@ func add_area(area, dict):
 	area.spawn_player(player_parameters, player_abilities)
 	area.move_player(dict)
 	
-	# TODO: Not 100% sure I want to do this
 	player = area.get_node("Player")
 	player.connect("game_over", self, "on_game_over")
 	player.connect("update_hud", self, "on_update_hud")
+	player.connect("update_player_parameters", self, "on_update_player_parameters")
+	player.connect("update_player_abilities", self, "on_update_player_abilities")
 	on_update_hud()
 	
 func on_update_hud():
@@ -102,13 +103,10 @@ func on_update_hud():
 	
 # TODO: Fix game over
 func on_game_over():
-	pass
-#	var game_over_screen = load("res://src/UI/GameOverScreen.tscn").instance()
-#	add_child(game_over_screen)
-#	game_over_screen.connect("reset", self, "on_reset")
+	user_interface.play_game_over()
+	user_interface.game_over.connect("reset", self, "on_reset")
 	
 func on_reset():
-	print("on reset")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	
@@ -117,15 +115,14 @@ func on_update_level_parameters(area, new_area_parameters):
 	area_parameters[area] = new_area_parameters
 	
 # TODO: Fix variable shadowing
-func on_update_player_parameters(player):
-	print("on update player params")
+func on_update_player_parameters():
 	player_parameters = {
 		"max_hp": player.stats.max_hp,
 		"current_hp": player.stats.current_hp
 	}
 	
 # TODO: Fix variable shadowing
-func on_update_player_abilities(player):
+func on_update_player_abilities():
 	player_abilities = player.abilities.abilities
 	
 func on_area_entered(area_name):
@@ -166,7 +163,15 @@ func on_play_boss_music():
 	music.volume_db = 0
 	music.play()
 	
+func on_display_boss_health_bar(boss):
+	user_interface.set_boss_health_bar(boss)
+	boss.connect("update_health_bar", self, "on_update_boss_health_bar")
+	
+func on_update_boss_health_bar(boss):
+	user_interface.boss_health_bar.health_bar.value = boss.stats.current_hp
+	
 func on_boss_defeated():
+	user_interface.boss_health_bar.hide()
 	music.load_music(get_node(current_area).music)
 	music.restart()
 				

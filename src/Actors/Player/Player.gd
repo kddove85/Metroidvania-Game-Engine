@@ -20,6 +20,8 @@ const ETANK_VALUE = 100
 const MORPH_BALL = "morph_ball"
 
 signal update_hud()
+signal update_player_parameters()
+signal update_player_abilities()
 signal player_ready()
 signal game_over()
 
@@ -92,12 +94,12 @@ func item_collected(type):
 		print("in the code")
 		stats.max_hp = stats.max_hp + ETANK_VALUE
 		stats.current_hp = stats.max_hp
-		emit_signal("update_player_parameters", self) # Error
-		emit_signal("update_hud", self) # Error
+		emit_signal("update_player_parameters") # Error
+		emit_signal("update_hud") # Error
 	if type == MORPH_BALL:
 		print("found morph ball")
 		abilities.abilities["can_morph"] = true
-		emit_signal("update_player_abilities", self)
+		emit_signal("update_player_abilities")
 
 func _on_RoomDetector_area_entered(area):
 	print("Room Detected")

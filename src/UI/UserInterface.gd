@@ -6,6 +6,8 @@ onready var hud = $HUD
 onready var item_acquired_box = $ItemAcquiredBox
 onready var dialogue_box = $DialogueBox
 onready var pause_menu = $PauseMenu
+onready var game_over = $GameOver
+onready var boss_health_bar = $BossHealthBar
 
 var is_pause_menu_open := false
 var can_pause_menu_be_opened := true
@@ -53,7 +55,17 @@ func load_item_acquired_text(new_text):
 func start_item_acquired():
 	item_acquired_box.start()
 	can_pause_menu_be_opened = false
-
+	
+func play_game_over():
+	game_over.play()
+	can_pause_menu_be_opened = false
+	
+func set_boss_health_bar(boss):
+	boss_health_bar.health_bar.max_value = boss.stats.max_hp
+	boss_health_bar.health_bar.value = boss.stats.current_hp
+	boss_health_bar.boss_name.text = boss.custom_name
+	boss_health_bar.show()
+	
 func _on_BonfireMenu_hide():
 	can_pause_menu_be_opened = true
 

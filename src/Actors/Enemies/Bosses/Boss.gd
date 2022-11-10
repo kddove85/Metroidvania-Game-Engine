@@ -5,18 +5,19 @@ enum STATES {IDLE, DIVE_ATTACK, THRUST_ATTACK, PROJECTILE_ATTACK}
 onready var attack_timer = $Timer
 onready var projectile_spawn_point = $AnimatedSprite/ProjectileSpawnPoint
 
-var boss_health_bar = load("res://src/UI/BossHealthBar.tscn").instance()
+#var boss_health_bar = load("res://src/UI/BossHealthBar.tscn").instance()
 var attacks = [STATES.DIVE_ATTACK, STATES.THRUST_ATTACK, STATES.PROJECTILE_ATTACK]
 var positions = [Vector2(8232, 2343), Vector2(9175, 2343)]
 
+signal update_health_bar()
 signal boss_defeated()
 
 func _ready():
 	current_state = STATES.IDLE
-	add_child(boss_health_bar)
-	boss_health_bar.health_bar.max_value = stats.max_hp
-	boss_health_bar.health_bar.value = stats.current_hp
-	boss_health_bar.boss_name.text = "Henry"
+#	add_child(boss_health_bar)
+#	boss_health_bar.health_bar.max_value = stats.max_hp
+#	boss_health_bar.health_bar.value = stats.current_hp
+#	boss_health_bar.boss_name.text = "Henry"
 	motion.x = speed.x
 
 func _physics_process(delta):
@@ -70,7 +71,7 @@ func on_damage(damage):
 		die()
 		
 func update_health_bar():
-	boss_health_bar.health_bar.value = stats.current_hp
+	emit_signal("update_health_bar", self)
 	
 func die():
 	emit_signal("boss_defeated")
