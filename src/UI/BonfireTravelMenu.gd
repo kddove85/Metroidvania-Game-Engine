@@ -1,6 +1,6 @@
 extends Control
 
-onready var vbox = $VBoxContainer
+onready var vbox = $ScrollContainer/VBoxContainer
 
 signal grant_focus()
 signal warp()

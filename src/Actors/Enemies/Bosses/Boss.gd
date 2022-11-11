@@ -7,17 +7,13 @@ onready var projectile_spawn_point = $AnimatedSprite/ProjectileSpawnPoint
 
 #var boss_health_bar = load("res://src/UI/BossHealthBar.tscn").instance()
 var attacks = [STATES.DIVE_ATTACK, STATES.THRUST_ATTACK, STATES.PROJECTILE_ATTACK]
-var positions = [Vector2(8232, 2343), Vector2(9175, 2343)]
+var positions = [Vector2(8224, 2312), Vector2(9184, 2312)]
 
 signal update_health_bar()
 signal boss_defeated()
 
 func _ready():
 	current_state = STATES.IDLE
-#	add_child(boss_health_bar)
-#	boss_health_bar.health_bar.max_value = stats.max_hp
-#	boss_health_bar.health_bar.value = stats.current_hp
-#	boss_health_bar.boss_name.text = "Henry"
 	motion.x = speed.x
 
 func _physics_process(delta):
@@ -108,7 +104,7 @@ func projectile_attack():
 func find_a_corner():
 	randomize()
 	positions.shuffle()
-	self.global_position = positions[0]
+	self.position = positions[0]
 	
 func face_the_player():
 	if direction == 0:

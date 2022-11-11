@@ -13,7 +13,7 @@ func _ready():
 	pass
 
 func load_text(new_text):
-	text_box.text = new_text
+	text_box.bbcode_text = "[center] %s [/center]" % new_text
 	
 func start():
 	open()

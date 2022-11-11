@@ -146,6 +146,7 @@ func spawn_boss():
 	var area_boss = boss.instance()
 	area_boss.global_position = boss_spawn_point.global_position
 	area_boss.connect("boss_defeated", self, "on_boss_defeated")
+#	get_node("Rooms").get_node("BossRoom").add_child(area)
 	add_child(area_boss)
 	is_boss_spawned = true
 	emit_signal("play_boss_music")

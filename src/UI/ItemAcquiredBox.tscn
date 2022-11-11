@@ -80,11 +80,15 @@ __meta__ = {
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
 visible = false
+anchor_right = 0.136
+anchor_bottom = 0.119
 margin_left = 8.0
-margin_top = 8.0
-margin_right = 888.0
-margin_bottom = 120.0
-text = "Placeholder text"
+margin_top = 52.0
+margin_right = 766.144
+margin_bottom = 60.768
+bbcode_enabled = true
+bbcode_text = "[center]Sample Text[/center]"
+text = "Sample Text"
 __meta__ = {
 "_edit_use_anchors_": false
 }
