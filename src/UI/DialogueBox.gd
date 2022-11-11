@@ -14,7 +14,7 @@ onready var page = 0
 var text
 
 func _ready():
-	pass
+	rtl.clear()
 
 func load_text(new_text):
 	text = new_text

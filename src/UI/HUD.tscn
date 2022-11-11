@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://assets/themes/user_interface.tres" type="Theme" id=1]
 [ext_resource path="res://src/UI/HUD.gd" type="Script" id=2]
-[ext_resource path="res://assets/themes/hud.tres" type="Theme" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.152941, 0.133333, 0.572549, 1 )
@@ -9,6 +9,7 @@ bg_color = Color( 0.152941, 0.133333, 0.572549, 1 )
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -19,7 +20,6 @@ margin_left = 16.0
 margin_top = 16.0
 margin_right = 80.0
 margin_bottom = 22.0
-theme = ExtResource( 3 )
 value = 50.0
 percent_visible = false
 __meta__ = {
@@ -31,7 +31,6 @@ margin_left = 16.0
 margin_top = 27.0
 margin_right = 80.0
 margin_bottom = 33.0
-theme = ExtResource( 3 )
 custom_styles/fg = SubResource( 1 )
 value = 50.0
 percent_visible = false
