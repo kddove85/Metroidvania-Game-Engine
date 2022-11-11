@@ -193,19 +193,16 @@ position = Vector2( 2560, 2100 )
 [node name="Room8" parent="Rooms" index="7" instance=ExtResource( 1 )]
 position = Vector2( 4608, 2700 )
 
-[node name="Platform" parent="Rooms/Room8/Platforms" index="0" instance=ExtResource( 14 )]
-position = Vector2( -224, -200 )
-
-[node name="Platform2" parent="Rooms/Room8/Platforms" index="1" instance=ExtResource( 14 )]
+[node name="Platform2" parent="Rooms/Room8/Platforms" index="0" instance=ExtResource( 14 )]
 position = Vector2( -288, -72 )
 
-[node name="Platform3" parent="Rooms/Room8/Platforms" index="2" instance=ExtResource( 14 )]
+[node name="Platform3" parent="Rooms/Room8/Platforms" index="1" instance=ExtResource( 14 )]
 position = Vector2( -32, -72 )
 
-[node name="Platform4" parent="Rooms/Room8/Platforms" index="3" instance=ExtResource( 14 )]
+[node name="Platform4" parent="Rooms/Room8/Platforms" index="2" instance=ExtResource( 14 )]
 position = Vector2( 224, -72 )
 
-[node name="Platform5" parent="Rooms/Room8/Platforms" index="4" instance=ExtResource( 14 )]
+[node name="Platform5" parent="Rooms/Room8/Platforms" index="3" instance=ExtResource( 14 )]
 position = Vector2( 352, -200 )
 
 [node name="Room9" parent="Rooms" index="8" instance=ExtResource( 1 )]
