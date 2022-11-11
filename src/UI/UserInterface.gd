@@ -13,6 +13,8 @@ var is_pause_menu_open := false
 var can_pause_menu_be_opened := true
 var activated_bonfires := []
 
+signal return_to_main_menu()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	bonfire_travel_menu.connect("warp", self, "on_warp")
@@ -75,3 +77,6 @@ func _on_Travel_pressed():
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "Close":
 		can_pause_menu_be_opened = true
+
+func _on_ReturnToMenu_pressed():
+	emit_signal("return_to_main_menu")

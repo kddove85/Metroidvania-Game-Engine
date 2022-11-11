@@ -231,6 +231,7 @@ func add_user_interface():
 #	user_interface.bonfire_menu.connect("travel", self, "on_bonfire_travel")
 	user_interface.bonfire_menu.connect("save", self, "save_game")
 	user_interface.bonfire_travel_menu.connect("warp", self, "on_bonfire_travel")
+	user_interface.connect("return_to_main_menu", self, "on_reset")
 	
 func on_options():
 	print("options")
