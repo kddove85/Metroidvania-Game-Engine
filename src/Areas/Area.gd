@@ -19,6 +19,7 @@ var etank = load("res://src/Collectibles/ETank.tscn")
 var level_parameters
 var health_drop
 var is_boss_spawned = false
+var rooms := []
 
 onready var boss_spawn_point = $BossSpawnPoint
 
@@ -32,6 +33,9 @@ func _ready():
 	spawn_collectibles()
 	connect_bonfires()
 	connect_gates()
+	for room in get_node("Rooms").get_children():
+		rooms.append(room)
+		room.connect("player_entered_room", self, "on_player_entered_room")
 	
 # load parameters is only called on load game
 func load_parameters(new_level_parameters: Dictionary):
@@ -53,6 +57,9 @@ func create_level_params():
 		for gate in gates:
 			level_parameters["is_%s_activated" % gate.name] = false
 		level_parameters["is_boss_defeated"] = false
+		var _rooms = get_node("Rooms").get_children()
+		for room in _rooms:
+			level_parameters["is_%s_entered" % room.name] = false
 			
 func spawn_player(player_parameters, player_abilities):
 	var player = load("res://src/Actors/Player/Player.tscn").instance()
@@ -105,7 +112,10 @@ func connect_bonfires():
 		if level_parameters["is_%s_activated" % bonfire.name]:
 			bonfire.is_activated = true
 			bonfire.particles.emitting = true
-				
+
+func on_player_entered_room(room_name):
+	level_parameters["is_%s_entered" % room_name] = true
+
 func on_open_bonfire_menu(bonfire_name):
 	emit_signal("open_bonfire_menu", bonfire_name)
 	var player = get_node("Player")
@@ -146,7 +156,6 @@ func spawn_boss():
 	var area_boss = boss.instance()
 	area_boss.global_position = boss_spawn_point.global_position
 	area_boss.connect("boss_defeated", self, "on_boss_defeated")
-#	get_node("Rooms").get_node("BossRoom").add_child(area)
 	add_child(area_boss)
 	is_boss_spawned = true
 	emit_signal("play_boss_music")

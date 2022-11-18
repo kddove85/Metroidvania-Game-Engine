@@ -65,6 +65,7 @@ func create_new_game():
 	on_update_player_abilities()
 	save_game()
 	get_node("MainMenu").queue_free()
+	user_interface.pause_menu.load_parameters(area_parameters)
 
 func get_area(area):
 	var area_to_load = load("res://src/Areas/%s.tscn" % area).instance()
@@ -90,6 +91,9 @@ func add_area(area, dict):
 	add_child(area)
 	area.spawn_player(player_parameters, player_abilities)
 	area.move_player(dict)
+	for room in area.rooms:
+		room.connect("player_entered_room", self, "on_player_enter_room")
+		room.connect("player_left_room", self, "on_player_left_room")
 	
 	player = area.get_node("Player")
 	player.connect("game_over", self, "on_game_over")
@@ -97,6 +101,13 @@ func add_area(area, dict):
 	player.connect("update_player_parameters", self, "on_update_player_parameters")
 	player.connect("update_player_abilities", self, "on_update_player_abilities")
 	on_update_hud()
+	
+func on_player_enter_room(room_name):
+	user_interface.pause_menu.set_current_map(current_area)
+	user_interface.pause_menu.current_map.show_room(room_name)
+	
+func on_player_left_room(room_name):
+	user_interface.pause_menu.current_map.leave_room(room_name)
 	
 func on_update_hud():
 	user_interface.hud.update_hud(player)
@@ -114,14 +125,12 @@ func on_update_level_parameters(area, new_area_parameters):
 	print("on update level params")
 	area_parameters[area] = new_area_parameters
 	
-# TODO: Fix variable shadowing
 func on_update_player_parameters():
 	player_parameters = {
 		"max_hp": player.stats.max_hp,
 		"current_hp": player.stats.current_hp
 	}
 	
-# TODO: Fix variable shadowing
 func on_update_player_abilities():
 	player_abilities = player.abilities.abilities
 	
@@ -187,11 +196,8 @@ func on_open_dialogue(dialogue):
 	user_interface.start_dialogue()
 	
 func on_open_item_acquired_box(text):
-#	var item_acquired_box = load("res://src/UI/ItemAcquiredBox.tscn").instance()
-#	add_child(item_acquired_box)
 	user_interface.load_item_acquired_text(text)
 	user_interface.start_item_acquired()
-#	item_acquired_box.animation_player.play("Open")
 		
 func save_game():
 	print("game saved")
@@ -225,10 +231,10 @@ func on_load_game():
 	area_parameters[AREA_E] = config.get_value(AREA_E, "area_parameters") if config.get_value(AREA_E, "area_parameters", "none") is Dictionary else null
 	var area = get_area(current_area)
 	add_area(area, {"type": "load_game", "bonfire": current_bonfire})
+	user_interface.pause_menu.load_parameters(area_parameters)
 	
 func add_user_interface():
 	add_child(user_interface)
-#	user_interface.bonfire_menu.connect("travel", self, "on_bonfire_travel")
 	user_interface.bonfire_menu.connect("save", self, "save_game")
 	user_interface.bonfire_travel_menu.connect("warp", self, "on_bonfire_travel")
 	user_interface.connect("return_to_main_menu", self, "on_reset")

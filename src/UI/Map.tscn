@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/UI/Map.gd" type="Script" id=1]
+[ext_resource path="res://assets/themes/user_interface.tres" type="Theme" id=2]
+[ext_resource path="res://assets/art/UI/MapFrame.png" type="Texture" id=3]
+
+[node name="Map" type="Control"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 195.0
+margin_bottom = 195.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapMarginContainer" type="MarginContainer" parent="."]
+margin_right = 632.0
+margin_bottom = 448.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Frame" type="NinePatchRect" parent="MapMarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 627.0
+margin_bottom = 443.0
+texture = ExtResource( 3 )
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="GridMarginContainer" type="MarginContainer" parent="MapMarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 627.0
+margin_bottom = 443.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="MapMarginContainer/GridMarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 602.0
+margin_bottom = 418.0
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 5.0
+margin_top = 13.0
+margin_right = 627.0
+margin_bottom = 34.0
+theme = ExtResource( 2 )
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0588235, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "Sample Text"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

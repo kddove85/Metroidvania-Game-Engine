@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/themes/user_interface.tres" type="Theme" id=1]
 [ext_resource path="res://src/UI/PauseMenu.gd" type="Script" id=2]
+[ext_resource path="res://src/UI/Map.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/art/UI/MapRoom.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/art/UI/MapRoom.tscn" type="PackedScene" id=5]
 
 [node name="PauseMenu" type="Control"]
 anchor_right = 1.0
@@ -16,6 +19,9 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="."]
 margin_left = 64.0
@@ -64,3 +70,136 @@ margin_bottom = 512.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MapAreaA" parent="Panel2" instance=ExtResource( 3 )]
+visible = false
+margin_right = 624.0
+margin_bottom = 440.0
+
+[node name="MapMarginContainer" parent="Panel2/MapAreaA" index="0"]
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 627.0
+margin_bottom = 443.0
+
+[node name="Room1" parent="Panel2/MapAreaA/Rooms" index="0" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room1" index="0"]
+tile_data = PoolIntArray( 65537, 1, 3, 131073, 1, 65539, 196609, 1, 131075 )
+
+[node name="Room2" parent="Panel2/MapAreaA/Rooms" index="1" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room2" index="0"]
+tile_data = PoolIntArray( 196610, 1, 196608, 196611, 1, 196610 )
+
+[node name="Room3" parent="Panel2/MapAreaA/Rooms" index="2" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room3" index="0"]
+tile_data = PoolIntArray( 196612, 1, 3, 262148, 1, 131075 )
+
+[node name="Room4" parent="Panel2/MapAreaA/Rooms" index="3" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room4" index="0"]
+tile_data = PoolIntArray( 262149, 1, 196608, 262150, 1, 196610 )
+
+[node name="Room5" parent="Panel2/MapAreaA/Rooms" index="4" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room5" index="0"]
+tile_data = PoolIntArray( 262151, 1, 196608, 262152, 1, 196610 )
+
+[node name="Room6" parent="Panel2/MapAreaA/Rooms" index="5" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room6" index="0"]
+tile_data = PoolIntArray( 262153, 1, 196611 )
+
+[node name="Room7" parent="Panel2/MapAreaA/Rooms" index="6" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room7" index="0"]
+tile_data = PoolIntArray( 262147, 1, 196611 )
+
+[node name="Room8" parent="Panel2/MapAreaA/Rooms" index="7" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room8" index="0"]
+tile_data = PoolIntArray( 327685, 1, 196611 )
+
+[node name="Room9" parent="Panel2/MapAreaA/Rooms" index="8" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room9" index="0"]
+tile_data = PoolIntArray( 262154, 1, 196611 )
+
+[node name="Room10" parent="Panel2/MapAreaA/Rooms" index="9" instance=ExtResource( 4 )]
+
+[node name="TileMap" parent="Panel2/MapAreaA/Rooms/Room10" index="0"]
+tile_data = PoolIntArray( 262155, 1, 196611 )
+
+[node name="Label" parent="Panel2/MapAreaA" index="2"]
+text = "Delson's Cave"
+
+[node name="MapAreaB" parent="Panel2" instance=ExtResource( 3 )]
+visible = false
+margin_right = 624.0
+margin_bottom = 440.0
+
+[node name="MapMarginContainer" parent="Panel2/MapAreaB" index="0"]
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 627.0
+margin_bottom = 443.0
+
+[node name="Room1" parent="Panel2/MapAreaB/Rooms" index="0" instance=ExtResource( 5 )]
+
+[node name="TileMap" parent="Panel2/MapAreaB/Rooms/Room1" index="0"]
+tile_data = PoolIntArray( 65537, 1, 196611 )
+
+[node name="Label" parent="Panel2/MapAreaB" index="2"]
+text = "Hahn Castle"
+
+[node name="MapAreaC" parent="Panel2" instance=ExtResource( 3 )]
+visible = false
+margin_right = 624.0
+margin_bottom = 440.0
+
+[node name="MapMarginContainer" parent="Panel2/MapAreaC" index="0"]
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 627.0
+margin_bottom = 443.0
+
+[node name="MapAreaD" parent="Panel2" instance=ExtResource( 3 )]
+visible = false
+margin_right = 624.0
+margin_bottom = 440.0
+
+[node name="MapMarginContainer" parent="Panel2/MapAreaD" index="0"]
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 627.0
+margin_bottom = 443.0
+
+[node name="MapAreaE" parent="Panel2" instance=ExtResource( 3 )]
+visible = false
+margin_right = 624.0
+margin_bottom = 440.0
+
+[node name="MapMarginContainer" parent="Panel2/MapAreaE" index="0"]
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 627.0
+margin_bottom = 443.0
+
+[editable path="Panel2/MapAreaA"]
+[editable path="Panel2/MapAreaA/Rooms/Room1"]
+[editable path="Panel2/MapAreaA/Rooms/Room2"]
+[editable path="Panel2/MapAreaA/Rooms/Room3"]
+[editable path="Panel2/MapAreaA/Rooms/Room4"]
+[editable path="Panel2/MapAreaA/Rooms/Room5"]
+[editable path="Panel2/MapAreaA/Rooms/Room6"]
+[editable path="Panel2/MapAreaA/Rooms/Room7"]
+[editable path="Panel2/MapAreaA/Rooms/Room8"]
+[editable path="Panel2/MapAreaA/Rooms/Room9"]
+[editable path="Panel2/MapAreaA/Rooms/Room10"]
+[editable path="Panel2/MapAreaB"]
+[editable path="Panel2/MapAreaB/Rooms/Room1"]
+[editable path="Panel2/MapAreaC"]
+[editable path="Panel2/MapAreaD"]
+[editable path="Panel2/MapAreaE"]

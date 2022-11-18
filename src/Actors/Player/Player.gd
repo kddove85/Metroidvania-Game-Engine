@@ -13,6 +13,7 @@ onready var hitbox = $Hurtboxes/HurtBox/CollisionShape2D
 onready var morph_hitbox = $Hurtboxes/MorphHitbox/CollisionShape2D
 
 var is_able_to_unmorph = true
+var is_able_to_fire = true
 
 const ETANK = "etank"
 const ETANK_VALUE = 100
@@ -27,6 +28,7 @@ signal game_over()
 
 func _ready():
 	morph_hitbox.disabled = true
+	is_able_to_fire = true
 
 func _physics_process(delta):
 	blink()
@@ -64,7 +66,7 @@ func _input(_event):
 #	var joypads = Input.get_connected_joypads()
 #	for joypad in joypads:
 #		print(Input.get_joy_name(joypad))
-	if Input.is_action_just_pressed("ui_fire"):
+	if Input.is_action_just_pressed("ui_fire") and is_able_to_fire:
 		var projectile = load("res://src/Projectiles/PlayerProjectile.tscn").instance()
 		projectile.global_position = projectile_spawn_point.global_position
 		projectile.set_as_toplevel(true)
@@ -79,6 +81,8 @@ func _input(_event):
 			self.get_node("DefaultShape").disabled = true
 			self.hitbox.disabled = true
 			self.morph_hitbox.disabled = false
+			staff.visible = false
+			is_able_to_fire = false
 		
 	if Input.is_action_just_pressed("ui_up") and current_state == STATES.MORPHED and is_able_to_unmorph:
 		sprite.play("default")
@@ -86,6 +90,8 @@ func _input(_event):
 		self.get_node("DefaultShape").disabled = false
 		self.hitbox.disabled = false
 		self.morph_hitbox.disabled = true
+		staff.visible = true
+		is_able_to_fire = true
 		
 # TODO: Fix this
 func item_collected(type):
